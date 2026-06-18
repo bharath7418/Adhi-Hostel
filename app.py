@@ -19,7 +19,7 @@ app  = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'pro_secret_key_99' 
 
-raw_db_url = os.getenv('DATABASE_URL')
+raw_db_url = os.getenv('DATABASE_Adhi_URL')
 app.config['SQLALCHEMY_DATABASE_URI'] = raw_db_url.replace("postgres://", "postgresql://", 1) if raw_db_url else 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
