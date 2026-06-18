@@ -19,9 +19,18 @@ app  = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'pro_secret_key_99' 
 
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'pro_secret_key_99')
+
 raw_db_url = os.getenv('DATABASE_Adhi_URL')
-app.config['SQLALCHEMY_DATABASE_URI'] = raw_db_url.replace("postgres://", "postgresql://", 1) if raw_db_url else 'sqlite:///database.db'
+use_tmp_sqlite = os.getenv('VERCEL') == '1'
+if raw_db_url:
+    app.config['SQLALCHEMY_DATABASE_URI'] = raw_db_url.replace("postgres://", "postgresql://", 1)
+elif use_tmp_sqlite:
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/database.db'
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
