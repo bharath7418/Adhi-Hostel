@@ -6,7 +6,6 @@ from datetime import date, datetime
 import qrcode
 import io
 import base64
-import cv2
 import pandas as pd
 import numpy as np
 import re
